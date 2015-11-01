@@ -33,10 +33,10 @@ export default class App extends Component {
   }
   render() {
     return (
-      <div>
+      <Grid>
         <SearchBar />
         <SearchList allSearchResults={this.state.allSearchResults} />
-      </div>
+      </Grid>
     );
   }
   _onChange() {
@@ -54,11 +54,9 @@ class SearchList extends Component {
       searchItems.push(<SearchItem key={item.cardId} data={item}></SearchItem>);
     }
     return (
-      <Grid>
         <Row>
           {searchItems}
         </Row>
-      </Grid>
     )
   }
 }
@@ -67,7 +65,7 @@ class SearchItem extends Component {
   render() {
     let data = this.props.data;
     return (
-      <Col xs={6} md={4}>
+      <Col xs={12} md={4} sm={6}>
         <Image src={data.img} />
       </Col>
     )
@@ -100,15 +98,19 @@ class SearchBar extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleClick}>
-        <Button type="submit"
-                bsStyle="primary"
-                bsSize="large"
-                >
-          Search
-        </Button>
-        <Input ref="search" type="text" bsSize="large" placeholder="Search..." value={this.state.text} onChange={this.handleChange} />
-      </form>
+      <Row>
+        <Col xs={12} md={12}>
+          <form onSubmit={this.handleClick}>
+            <Button type="submit"
+                    bsStyle="primary"
+                    bsSize="large"
+              >
+              Search
+            </Button>
+            <Input ref="search" type="text" bsSize="large" placeholder="Search..." value={this.state.text} onChange={this.handleChange} />
+          </form>
+        </Col>
+      </Row>
     )
   }
 }

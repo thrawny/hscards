@@ -7,12 +7,12 @@ import { Dispatcher } from 'flux';
 import assign from 'object-assign';
 import { EventEmitter } from 'events';
 
-import KEY from 'secret';
 
 var AppDispatcher = new Dispatcher();
 
 const CHANGE_EVENT = 'change';
 const URL = 'https://omgvamp-hearthstone-v1.p.mashape.com/cards';
+import KEY from './secret';
 
 var _search = [];
 
@@ -24,7 +24,7 @@ var AppActions = {
   search: function(text) {
     $.ajax({
       url: URL+'/search/'+text+'?collectible=1',
-      headers: {"X-Mashape-Key": KEY},
+      headers: {'X-Mashape-Key': KEY},
       success: function (data) {
         AppDispatcher.dispatch({
           actionType: AppConstants.SEARCH,
