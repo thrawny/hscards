@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
-import {AppActions, AppStore} from './Store';
+var Reflux = require('reflux');
+import {AppActions, AppStore} from './Store2';
 
 import {
   Button,
@@ -19,32 +20,44 @@ function getSearchState() {
   }
 }
 
-export default class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = getSearchState();
-    this._onChange = this._onChange.bind(this);
-  }
-  componentDidMount() {
-    AppStore.addChangeListener(this._onChange);
-  }
-  componentWillUnmount() {
-    AppStore.removeChangeListener(this._onChange);
-  }
+
+//export default class App extends Component {
+//  constructor(props) {
+//    super(props);
+//    this.state = getSearchState();
+//    this._onChange = this._onChange.bind(this);
+//  }
+//  componentDidMount() {
+//    AppStore.addChangeListener(this._onChange);
+//  }
+//  componentWillUnmount() {
+//    AppStore.removeChangeListener(this._onChange);
+//  }
+//  render() {
+//    return (
+//      <Grid>
+//        <SearchBar />
+//        <SearchList allSearchResults={this.state.allSearchResults} />
+//      </Grid>
+//    );
+//  }
+//  _onChange() {
+//    console.log(getSearchState());
+//    this.setState(getSearchState());
+//  }
+//}
+
+var App = React.createClass({
+  mixins: [Reflux.connect(AppStore, 'list')],
   render() {
     return (
       <Grid>
         <SearchBar />
-        <SearchList allSearchResults={this.state.allSearchResults} />
+        <SearchList allSearchResults={this.state.list} />
       </Grid>
     );
   }
-  _onChange() {
-    console.log(getSearchState());
-    this.setState(getSearchState());
-  }
-}
-
+});
 
 class SearchList extends Component {
   render() {
@@ -101,12 +114,6 @@ class SearchBar extends Component {
       <Row>
         <Col xs={12} md={12}>
           <form onSubmit={this.handleClick}>
-            <Button type="submit"
-                    bsStyle="primary"
-                    bsSize="large"
-              >
-              Search
-            </Button>
             <Input ref="search" type="text" bsSize="large" placeholder="Search..." value={this.state.text} onChange={this.handleChange} />
           </form>
         </Col>
@@ -114,3 +121,5 @@ class SearchBar extends Component {
     )
   }
 }
+
+export default App;

@@ -2,16 +2,16 @@
  * Created by thrawn on 01/11/15.
  */
 
-import $ from 'jquery';
+import request from 'superagent';
 import { Dispatcher } from 'flux';
 import assign from 'object-assign';
-import { EventEmitter } from 'events';
+import EventEmitter from 'events';
 
 
 var AppDispatcher = new Dispatcher();
 
 const CHANGE_EVENT = 'change';
-const URL = 'https://omgvamp-hearthstone-v1.p.mashape.com/cards';
+const URL = 'https://omgvamp-hearthstone-v1.p.mashape.com/cards/search/';
 import KEY from './secret';
 
 var _search = [];
@@ -22,17 +22,23 @@ const AppConstants = {
 
 var AppActions = {
   search: function(text) {
-    $.ajax({
-      url: URL+'/search/'+text+'?collectible=1',
-      headers: {'X-Mashape-Key': KEY},
-      success: function (data) {
-        AppDispatcher.dispatch({
-          actionType: AppConstants.SEARCH,
-          text: text,
-          data: data
-        });
-      }
-    });
+    request
+      .get(URL+text)
+      .query({collectible: 1})
+      .set('X-Mashape-Key', KEY)
+      .end(function(err, res) {
+        console.log(res);
+        if (!err) {
+          AppDispatcher.dispatch({
+            actionType: AppConstants.SEARCH,
+            text: text,
+            data: res.body
+          });
+        }
+        else {
+          console.log(err);
+        }
+      });
   }
 };
 

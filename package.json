@@ -38,10 +38,11 @@
   },
   "dependencies": {
     "flux": "^2.1.1",
-    "jquery": "^2.1.4",
     "object-assign": "^4.0.1",
     "react": "^0.14.0",
     "react-bootstrap": "^0.27.3",
-    "react-dom": "^0.14.0"
+    "react-dom": "^0.14.0",
+    "reflux": "^0.3.0",
+    "superagent": "^1.4.0"
   }
 }
