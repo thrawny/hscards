@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-var Reflux = require('reflux');
-import {AppActions, AppStore} from './Store2';
+import Reflux from 'reflux';
+import Store from './Store';
+import Actions from './Actions';
 
 import {
   Button,
@@ -14,41 +15,9 @@ import {
   Col
 } from 'react-bootstrap';
 
-function getSearchState() {
-  return {
-    allSearchResults: AppStore.getAll()
-  }
-}
-
-
-//export default class App extends Component {
-//  constructor(props) {
-//    super(props);
-//    this.state = getSearchState();
-//    this._onChange = this._onChange.bind(this);
-//  }
-//  componentDidMount() {
-//    AppStore.addChangeListener(this._onChange);
-//  }
-//  componentWillUnmount() {
-//    AppStore.removeChangeListener(this._onChange);
-//  }
-//  render() {
-//    return (
-//      <Grid>
-//        <SearchBar />
-//        <SearchList allSearchResults={this.state.allSearchResults} />
-//      </Grid>
-//    );
-//  }
-//  _onChange() {
-//    console.log(getSearchState());
-//    this.setState(getSearchState());
-//  }
-//}
 
 var App = React.createClass({
-  mixins: [Reflux.connect(AppStore, 'list')],
+  mixins: [Reflux.connect(Store, 'list')],
   render() {
     return (
       <Grid>
@@ -59,7 +28,7 @@ var App = React.createClass({
   }
 });
 
-class SearchList extends Component {
+var SearchList = React.createClass({
   render() {
     let allSearchResults = this.props.allSearchResults;
     let searchItems = [];
@@ -67,14 +36,14 @@ class SearchList extends Component {
       searchItems.push(<SearchItem key={item.cardId} data={item}></SearchItem>);
     }
     return (
-        <Row>
-          {searchItems}
-        </Row>
+      <Row>
+        {searchItems}
+      </Row>
     )
   }
-}
+});
 
-class SearchItem extends Component {
+var SearchItem = React.createClass({
   render() {
     let data = this.props.data;
     return (
@@ -83,31 +52,27 @@ class SearchItem extends Component {
       </Col>
     )
   }
+});
 
-}
 
-class SearchBar extends Component {
-  constructor(props) {
-    super(props);
-    this.handleClick = this.handleClick.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.state = {
+var SearchBar = React.createClass({
+  getInitialState() {
+    return {
       text: ''
     }
-  }
-
+  },
   handleClick(e) {
     e.preventDefault();
-    AppActions.search(this.state.text);
+    Actions.search(this.state.text);
     this.setState({
       text: ''
     });
-  }
+  },
   handleChange(e) {
     this.setState({
       text: e.target.value
     });
-  }
+  },
 
   render() {
     return (
@@ -120,6 +85,6 @@ class SearchBar extends Component {
       </Row>
     )
   }
-}
+});
 
 export default App;

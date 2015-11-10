@@ -1,27 +1,21 @@
 /**
- * Created by thrawn on 01/11/15.
+ * Created by thrawn on 04/11/15.
  */
 
+import Reflux from 'reflux';
 import request from 'superagent';
-import { Dispatcher } from 'flux';
-import assign from 'object-assign';
-import EventEmitter from 'events';
-
-
-var AppDispatcher = new Dispatcher();
-
-const CHANGE_EVENT = 'change';
-const URL = 'https://omgvamp-hearthstone-v1.p.mashape.com/cards/search/';
 import KEY from './secret';
+import Actions from './Actions';
 
-var _search = [];
+const URL = 'https://omgvamp-hearthstone-v1.p.mashape.com/cards/search/';
 
-const AppConstants = {
-  SEARCH: 'SEARCH'
-};
-
-var AppActions = {
-  search: function(text) {
+var Store = Reflux.createStore({
+  listenables: Actions,
+  getInitialState() {
+    this.list = [];
+    return this.list;
+  },
+  onSearch(text) {
     request
       .get(URL+text)
       .query({collectible: 1})
@@ -29,55 +23,17 @@ var AppActions = {
       .end(function(err, res) {
         console.log(res);
         if (!err) {
-          AppDispatcher.dispatch({
-            actionType: AppConstants.SEARCH,
-            text: text,
-            data: res.body
-          });
+          this.updateList(res.body)
         }
         else {
           console.log(err);
         }
-      });
+      }.bind(this));
+  },
+  updateList(list) {
+    this.list = list;
+    this.trigger(this.list);
   }
-};
-
-
-var AppStore = assign({}, EventEmitter.prototype, {
-
-  getAll: function() {
-    return _search;
-  },
-
-  emitChange: function() {
-    this.emit(CHANGE_EVENT);
-  },
-
-  addChangeListener: function(callback) {
-    this.on(CHANGE_EVENT, callback);
-  },
-
-  removeChangeListener: function(callback) {
-    this.removeListener(CHANGE_EVENT, callback);
-  }
-
 });
 
-AppDispatcher.register(function(action) {
-
-  switch(action.actionType) {
-    case AppConstants.SEARCH:
-      console.log(AppConstants.SEARCH);
-      _search = action.data;
-      AppStore.emitChange();
-      break;
-    default:
-      // no op
-  }
-
-});
-
-export{ AppActions, AppStore };
-
-
-
+export default Store;
