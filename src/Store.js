@@ -13,9 +13,13 @@ var Store = Reflux.createStore({
   listenables: Actions,
   getInitialState() {
     this.list = [];
-    return this.list;
+    return {
+      loading: false,
+      list: this.list
+    };
   },
   onSearch(text) {
+    this._loading();
     request
       .get(URL+text)
       .query({collectible: 1})
@@ -23,16 +27,23 @@ var Store = Reflux.createStore({
       .end(function(err, res) {
         console.log(res);
         if (!err) {
-          this.updateList(res.body)
+          this._updateList(res.body);
         }
         else {
           console.log(err);
+          this._updateList([])
         }
       }.bind(this));
   },
-  updateList(list) {
+  _loading() {
+    this.trigger({ loading: true })
+  },
+  _updateList(list) {
     this.list = list;
-    this.trigger(this.list);
+    this.trigger({
+      loading: false,
+      list: this.list
+    });
   }
 });
 

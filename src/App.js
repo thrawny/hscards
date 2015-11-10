@@ -12,17 +12,22 @@ import {
   Input,
   Grid,
   Row,
-  Col
+  Col,
+  PageHeader,
+  Panel
 } from 'react-bootstrap';
 
 
 var App = React.createClass({
-  mixins: [Reflux.connect(Store, 'list')],
+  mixins: [Reflux.connect(Store)],
   render() {
+    let searchBar = this.state.loading ?
+      <div>Loading</div> : <SearchList allSearchResults={this.state.list} />;
     return (
       <Grid>
+        <PageHeader>Search for Hearthstone cards</PageHeader>
         <SearchBar />
-        <SearchList allSearchResults={this.state.list} />
+        {searchBar}
       </Grid>
     );
   }
@@ -33,7 +38,7 @@ var SearchList = React.createClass({
     let allSearchResults = this.props.allSearchResults;
     let searchItems = [];
     for (var item of allSearchResults) {
-      searchItems.push(<SearchItem key={item.cardId} data={item}></SearchItem>);
+      searchItems.push(<SearchItem key={item.cardId} data={item} />);
     }
     return (
       <Row>
@@ -48,7 +53,9 @@ var SearchItem = React.createClass({
     let data = this.props.data;
     return (
       <Col xs={12} md={4} sm={6}>
-        <Image src={data.img} />
+        <Panel>
+          <Image src={data.img} />
+        </Panel>
       </Col>
     )
   }
@@ -83,7 +90,7 @@ var SearchBar = React.createClass({
           </form>
         </Col>
       </Row>
-    )
+    );
   }
 });
 
