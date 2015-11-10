@@ -4,12 +4,12 @@
 
 import Reflux from 'reflux';
 import request from 'superagent';
-import KEY from './secret';
-import Actions from './Actions';
+import KEY from './../secret';
+import Actions from './SearchActions';
 
 const URL = 'https://omgvamp-hearthstone-v1.p.mashape.com/cards/search/';
 
-var Store = Reflux.createStore({
+var SearchStore = Reflux.createStore({
   listenables: Actions,
   getInitialState() {
     this.list = [];
@@ -20,12 +20,12 @@ var Store = Reflux.createStore({
   },
   onSearch(text) {
     this._loading();
+    console.log('search');
     request
       .get(URL+text)
       .query({collectible: 1})
       .set('X-Mashape-Key', KEY)
       .end(function(err, res) {
-        console.log(res);
         if (!err) {
           this._updateList(res.body);
         }
@@ -47,4 +47,4 @@ var Store = Reflux.createStore({
   }
 });
 
-export default Store;
+export default SearchStore;
