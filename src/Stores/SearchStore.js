@@ -5,12 +5,12 @@
 import Reflux from 'reflux';
 import request from 'superagent';
 import KEY from './../secret';
-import Actions from './SearchActions';
+import SearchActions from './SearchActions';
 
 const URL = 'https://omgvamp-hearthstone-v1.p.mashape.com/cards/search/';
 
 var SearchStore = Reflux.createStore({
-  listenables: Actions,
+  listenables: SearchActions,
   getInitialState() {
     this.list = [];
     return {

@@ -25,11 +25,11 @@ import {
 
 const SearchItem = React.createClass({
   render() {
-    let data = this.props.data;
+    const data = this.props.data;
     return (
       <Col xs={12} md={4} sm={6}>
         <Panel>
-          <Link to="card"><Image src={data.img} /></Link>
+          <Link to={"card/"+data.name}><Image src={data.img} /></Link>
         </Panel>
       </Col>
     )

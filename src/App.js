@@ -12,7 +12,7 @@ import CardPage from './Pages/Card';
 
 const routes = (
   <Route path="/" component={HomePage}>
-    <Route path="card" component={CardPage} />
+    <Route path="card/:name" component={CardPage} />
     <Route path="search(/:text)" component={SearchPage} />
     <IndexRedirect to="search" />
   </Route>
