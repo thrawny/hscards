@@ -18,6 +18,8 @@ import {
   Panel
 } from 'react-bootstrap';
 
+import CardInfo from '../Components/CardInfo';
+
 
 const CardPage = React.createClass({
   mixins: [Reflux.connect(CardStore)],
@@ -29,26 +31,16 @@ const CardPage = React.createClass({
       return <div>Loading</div>;
     }
 
-    const dataList = _.chain(this.state.data)
-      .omit('img', 'imgGold', 'cardId', 'locale')
-      .pairs()
-      .map(function([key, value]){
-        const htmlValue = {__html: value.toString()};
-        return <div key={key}>{key}: <span dangerouslySetInnerHTML={htmlValue} /></div>;
-      })
-      .value();
 
     return (
       <Row>
-        <Col xs={6} md={6}>
+        <Col sm={6} md={4}>
           <Panel>
-            <Image src={this.state.data.img} />
+            <Image src={this.state.data.img} responsive />
           </Panel>
         </Col>
-        <Col xs={6} md={6}>
-          <Panel>
-            {dataList}
-          </Panel>
+        <Col sm={6} md={8}>
+          <CardInfo data={this.state.data} />
         </Col>
       </Row>
     )

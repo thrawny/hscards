@@ -24,9 +24,9 @@ const SearchItem = React.createClass({
   render() {
     const data = this.props.data;
     return (
-      <Col xs={12} md={4} sm={6}>
+      <Col md={4} sm={6}>
         <Panel>
-          <Link to={"card/"+data.name}><Image src={data.img} /></Link>
+          <Link to={"card/"+data.name}><Image src={data.img} responsive /></Link>
         </Panel>
       </Col>
     )
