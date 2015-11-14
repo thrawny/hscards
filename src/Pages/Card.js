@@ -1,11 +1,9 @@
 import React from 'react';
 import Reflux from 'reflux';
+import _ from 'lodash';
+
 import CardStore from '../Stores/CardStore';
 import CardActions from '../Stores/CardActions';
-import { createHistory, useBasename } from 'history';
-import { Router, Route, Link, IndexRoute, IndexRedirect, History, Lifecycle } from 'react-router';
-
-import { objectEntries } from '../utils';
 
 import {
   Button,
@@ -20,22 +18,37 @@ import {
   Panel
 } from 'react-bootstrap';
 
+
 const CardPage = React.createClass({
   mixins: [Reflux.connect(CardStore)],
   componentDidMount() {
     CardActions.load(this.props.params.name);
   },
   render() {
-    let dataList = [];
-    for (let [key,value] of objectEntries(this.state.data)) {
-      console.log(`${key}: ${value}`);
-      dataList.push(<div key={key}>{key}: {value.toString()}</div>)
+    if (this.state.loading) {
+      return <div>Loading</div>;
     }
+
+    const dataList = _.chain(this.state.data)
+      .omit('img', 'imgGold', 'cardId', 'locale')
+      .pairs()
+      .map(function([key, value]){
+        const htmlValue = {__html: value.toString()};
+        return <div key={key}>{key}: <span dangerouslySetInnerHTML={htmlValue} /></div>;
+      })
+      .value();
 
     return (
       <Row>
-        <Col xs={12} md={12}>
-          {dataList}
+        <Col xs={6} md={6}>
+          <Panel>
+            <Image src={this.state.data.img} />
+          </Panel>
+        </Col>
+        <Col xs={6} md={6}>
+          <Panel>
+            {dataList}
+          </Panel>
         </Col>
       </Row>
     )

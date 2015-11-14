@@ -41,8 +41,8 @@
     "webpack-dev-server": "^1.12.1"
   },
   "dependencies": {
-    "flux": "^2.1.1",
     "history": "^1.13.0",
+    "lodash": "^3.10.1",
     "object-assign": "^4.0.1",
     "react": "^0.14.0",
     "react-bootstrap": "^0.27.3",

@@ -4,11 +4,7 @@
  */
 
 import React from 'react';
-import Reflux from 'reflux';
-import SearchStore from '../Stores/SearchStore';
-import SearchActions from '../Stores/SearchActions';
-import { createHistory, useBasename } from 'history';
-import { Router, Route, Link, IndexRoute, IndexRedirect, History, Lifecycle } from 'react-router';
+import { History } from 'react-router';
 
 import {
   Button,
@@ -24,10 +20,6 @@ import {
 } from 'react-bootstrap';
 
 
-//const history = useBasename(createHistory)({
-//  basename: '/transitions'
-//});
-
 const SearchBar = React.createClass({
   mixins: [History],
   getInitialState() {
@@ -37,10 +29,12 @@ const SearchBar = React.createClass({
   },
   handleClick(e) {
     e.preventDefault();
-    this.setState({
-      text: ''
-    });
-    this.history.pushState(null, 'search/'+this.state.text);
+    if (this.state.text !== '') {
+      this.setState({
+        text: ''
+      });
+      this.history.pushState(null, 'search/'+this.state.text);
+    }
   },
   handleChange(e) {
     this.setState({
