@@ -18,7 +18,7 @@ import {
   Panel
 } from 'react-bootstrap';
 
-import SearchBar from '../Components/SearchBar';
+import SearchBar from '../components/SearchBar';
 
 const HomePage = React.createClass({
   render() {

@@ -39,6 +39,7 @@ var SearchStore = Reflux.createStore({
         .end(function(err, res) {
           if (!err) {
             const cards = res.body;
+            console.log(cards);
             _cache[text] = cards;
             CardStore.addCardsToCache(cards);
             this._updateList(cards);

@@ -2,8 +2,8 @@ import React from 'react';
 import Reflux from 'reflux';
 import _ from 'lodash';
 
-import CardStore from '../Stores/CardStore';
-import CardActions from '../Stores/CardActions';
+import CardStore from '../store/CardStore';
+import CardActions from '../store/CardActions';
 
 import {
   Button,
@@ -18,13 +18,13 @@ import {
   Panel
 } from 'react-bootstrap';
 
-import CardInfo from '../Components/CardInfo';
+import CardInfo from '../components/CardInfo';
 
+import { search, selectCard } from '../actions'
 
 const CardPage = React.createClass({
-  mixins: [Reflux.connect(CardStore)],
   componentDidMount() {
-    CardActions.load(this.props.params.name);
+    dispatch(selectCard(this.props.params.name));
   },
   render() {
     if (this.state.loading) {
@@ -36,7 +36,7 @@ const CardPage = React.createClass({
       <Row>
         <Col sm={6} md={4}>
           <Panel>
-            <Image src={this.state.data.img} responsive />
+            <Image className="center-block" src={this.state.data.img} responsive />
           </Panel>
         </Col>
         <Col sm={6} md={8}>

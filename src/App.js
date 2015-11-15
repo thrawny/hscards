@@ -1,9 +1,9 @@
 import React from 'react';
 import { Router, Route, IndexRedirect } from 'react-router';
 
-import HomePage from './Pages/Home';
-import SearchPage from './Pages/Search';
-import CardPage from './Pages/Card';
+import HomePage from './pages/Home';
+import SearchPage from './pages/Search';
+import CardPage from './pages/Card';
 
 const routes = (
   <Route path="/" component={HomePage}>

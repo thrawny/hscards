@@ -1,8 +1,9 @@
 import React from 'react';
 import Reflux from 'reflux';
-import SearchStore from '../Stores/SearchStore';
-import SearchActions from '../Stores/SearchActions';
+import SearchStore from '../store/SearchStore';
+import SearchActions from '../store/SearchActions';
 import { Router, Route, Link, IndexRoute, IndexRedirect, History, Lifecycle } from 'react-router';
+import { connect } from 'react-redux';
 
 import {
   Button,
@@ -17,36 +18,28 @@ import {
   Panel
 } from 'react-bootstrap';
 
-import SearchList from '../Components/SearchList';
+import { fetchSearch } from '../actions'
+
+import SearchList from '../components/SearchList';
 
 const SearchPage = React.createClass({
-  mixins: [Reflux.connect(SearchStore), History],
   componentDidMount() {
     console.log('mount');
+    console.log(this.props);
     if (this.props.params.text) {
-      SearchActions.search(this.props.params.text);
+      //SearchActions.search(this.props.params.text);
+      //dispatch(fetchSearch(this.props.params.text));
     }
   },
   componentWillReceiveProps(nextProps) {
     if (nextProps.params.text && nextProps.params.text !== this.props.params.text) {
-      SearchActions.search(nextProps.params.text);
+      //dispatch(fetchSearch(this.props.params.text));
     }
   },
-  //shouldComponentUpdate(nextProps, nextState) {
-  //  if (nextState.list.length === 1) {
-  //    console.log('inne');
-  //    const card = nextState.list[0];
-  //    this.history.pushState(null, 'card/'+card.name);
-  //    return false;
-  //  }
-  //  else {
-  //    return true;
-  //  }
-  //},
   render() {
-    let searchResults = this.state.loading ?
+    let searchResults = false ?
       <Col xs={12} md={12}><div>Loading</div></Col> :
-      <SearchList allSearchResults={this.state.list} text={this.props.params.text} />;
+      <SearchList allSearchResults={[]} text={this.props.params.text} />;
     return (
       <Row>
         {searchResults}
@@ -55,4 +48,9 @@ const SearchPage = React.createClass({
   }
 });
 
-export default SearchPage;
+function mapStateToProps(state) {
+  console.log('state', state);
+  return state;
+}
+
+export default connect(mapStateToProps)(SearchPage);
