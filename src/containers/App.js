@@ -6,7 +6,7 @@
 
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { search, selectCard } from '../actions'
+import { search, selectCard, fetchSearch } from '../actions'
 
 import { Router, Route, IndexRedirect } from 'react-router';
 import { ReduxRouter } from 'redux-router';
@@ -25,7 +25,8 @@ const routes = (
 
 const App = React.createClass({
   componentDidMount() {
-    console.log(this.props);
+    //console.log(this.props);
+    this.props.dispatch(search('ice'));
   },
   render() {
     return (

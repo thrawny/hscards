@@ -24,16 +24,15 @@ import SearchList from '../components/SearchList';
 
 const SearchPage = React.createClass({
   componentDidMount() {
-    console.log('mount');
     console.log(this.props);
     if (this.props.params.text) {
       //SearchActions.search(this.props.params.text);
-      //dispatch(fetchSearch(this.props.params.text));
+      this.props.dispatch(fetchSearch(this.props.params.text));
     }
   },
   componentWillReceiveProps(nextProps) {
     if (nextProps.params.text && nextProps.params.text !== this.props.params.text) {
-      //dispatch(fetchSearch(this.props.params.text));
+      this.props.dispatch(fetchSearch(nextProps.params.text));
     }
   },
   render() {
@@ -49,7 +48,6 @@ const SearchPage = React.createClass({
 });
 
 function mapStateToProps(state) {
-  console.log('state', state);
   return state;
 }
 

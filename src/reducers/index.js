@@ -29,6 +29,7 @@ function searchResults(state = {
   isFetching: false,
   cards: []
 }, action) {
+  console.log(action.type);
   switch(action.type) {
     case REQUEST_SEARCH:
       return {

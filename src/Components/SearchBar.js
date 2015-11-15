@@ -33,7 +33,7 @@ const SearchBar = React.createClass({
       this.setState({
         text: ''
       });
-      this.history.pushState(null, 'search/'+this.state.text);
+      this.history.pushState(null, '/search/'+this.state.text);
     }
   },
   handleChange(e) {
