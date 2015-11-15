@@ -35,13 +35,12 @@ const SearchPage = React.createClass({
     }
   },
   render() {
-    if (this.props.isFetching) {
-      return <Row><Col xs={12} md={12}><div>Loading</div></Col></Row>;
-    }
-    //  <SearchList allSearchResults={this.props.cards} text={this.props.params.text} />;
-    const searchResults = <SearchList allSearchResults={this.props.cards} text={this.props.params.text} />;
+    const searchResults = false ?
+      <div><Col xs={12} md={12}>Loading</Col></div> :
+      <SearchList allSearchResults={this.props.cards} text={this.props.params.text} />;
     return (
       <Row>
+        {this.props.isFetching ? <div><Col xs={12} md={12}>Loading</Col></div> : null}
         {searchResults}
       </Row>
     );

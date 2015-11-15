@@ -15,10 +15,8 @@ const SearchList = React.createClass({
       return <SearchItem key={item.cardId} data={item} />;
     });
     return (
-      <div>
-        {searchItems}
-      </div>
-    )
+      <div>{searchItems}</div>
+    );
   }
 });
 
