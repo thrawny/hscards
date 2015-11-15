@@ -24,7 +24,6 @@ import SearchList from '../components/SearchList';
 
 const SearchPage = React.createClass({
   componentDidMount() {
-    console.log(this.props);
     if (this.props.params.text) {
       //SearchActions.search(this.props.params.text);
       this.props.dispatch(fetchSearch(this.props.params.text));
@@ -36,9 +35,10 @@ const SearchPage = React.createClass({
     }
   },
   render() {
-    let searchResults = false ?
-      <Col xs={12} md={12}><div>Loading</div></Col> :
-      <SearchList allSearchResults={[]} text={this.props.params.text} />;
+    //const searchResults = this.props.isFetching ?
+    //  <Col xs={12} md={12}><div>Loading</div></Col> :
+    const cards = this.props.isFetching ? [] : this.props.cards;
+    const searchResults = <SearchList allSearchResults={cards} text={this.props.params.text} />;
     return (
       <Row>
         {searchResults}
@@ -48,7 +48,7 @@ const SearchPage = React.createClass({
 });
 
 function mapStateToProps(state) {
-  return state;
+  return state.rootReducer.searchResults;
 }
 
 export default connect(mapStateToProps)(SearchPage);

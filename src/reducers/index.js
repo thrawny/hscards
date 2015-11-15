@@ -29,12 +29,11 @@ function searchResults(state = {
   isFetching: false,
   cards: []
 }, action) {
-  console.log(action.type);
   switch(action.type) {
     case REQUEST_SEARCH:
       return {
         isFetching: true,
-        cards: []
+        cards: state.cards.slice()
       };
     case RECEIVE_SEARCH:
       return {

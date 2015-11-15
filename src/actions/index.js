@@ -18,7 +18,6 @@ import KEY from '../secret';
 //export const INVALIDATE_REDDIT = 'INVALIDATE_REDDIT';
 
 export function search(text) {
-  console.log('searching');
   return {
     type: SEARCH,
     text
@@ -40,15 +39,12 @@ function requestSearch(text) {
 }
 
 function receiveSearch(text, json) {
-  console.log('receiveSearch');
-  const obj = {
+  return {
     type: RECEIVE_SEARCH,
     text: text,
     cards: json,
     receivedAt: Date.now()
   };
-  console.log(obj);
-  return obj;
 }
 
 function requestCard(name) {
@@ -59,19 +55,16 @@ function requestCard(name) {
 }
 
 function receiveCard(name, json) {
-  const obj = {
+  return {
     type: RECEIVE_CARD,
     name,
     //card: json.data.children.map(child => child.data),
     card: json[0],
     receivedAt: Date.now()
   };
-  console.log(obj);
-  return obj;
 }
 
 export function fetchSearch(text) {
-  console.log('fetchSearch');
   return dispatch => {
     dispatch(requestSearch(text));
     return fetch(`https://omgvamp-hearthstone-v1.p.mashape.com/cards/search/${text}?collectible=1`, {
