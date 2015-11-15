@@ -31,15 +31,15 @@ function searchResults(state = {
 }, action) {
   switch(action.type) {
     case REQUEST_SEARCH:
-      return {
+      return Object.assign({}, state, {
         isFetching: true,
-        cards: state.cards.slice()
-      };
+        cards: []
+      });
     case RECEIVE_SEARCH:
-      return {
+      return Object.assign({}, state, {
         isFetching: false,
         cards: action.cards
-      };
+      });
     default:
       return state;
   }

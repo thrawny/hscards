@@ -26,10 +26,10 @@ const SearchItem = React.createClass({
     return (
       <Col md={4} sm={6}>
         <Panel>
-          <Link to={"card/"+data.name}><Image className="center-block" src={data.img} responsive /></Link>
+          <Image className="center-block" src={data.img} responsive />
         </Panel>
       </Col>
-    )
+    );
   }
 });
 

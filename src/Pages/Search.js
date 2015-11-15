@@ -20,7 +20,7 @@ import {
 
 import { fetchSearch } from '../actions'
 
-import SearchList from '../components/SearchList';
+import SearchItem from '../components/SearchItem';
 
 const SearchPage = React.createClass({
   componentDidMount() {
@@ -35,13 +35,19 @@ const SearchPage = React.createClass({
     }
   },
   render() {
-    const searchResults = false ?
-      <div><Col xs={12} md={12}>Loading</Col></div> :
-      <SearchList allSearchResults={this.props.cards} text={this.props.params.text} />;
+    const {isFetching, cards } = this.props;
+    const cardList = (
+      <div>
+        {cards.map(function(item){
+          return <SearchItem key={item.cardId} data={item} />;
+        })}
+      </div>
+    );
     return (
       <Row>
-        {this.props.isFetching ? <div><Col xs={12} md={12}>Loading</Col></div> : null}
-        {searchResults}
+        {!isFetching && cards.length === 0 && <div>No results</div>}
+        {isFetching && cards.length === 0 && <div>Loading...</div>}
+        {cards.length > 0 && cardList}
       </Row>
     );
   }

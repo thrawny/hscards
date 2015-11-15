@@ -39,10 +39,11 @@ function requestSearch(text) {
 }
 
 function receiveSearch(text, json) {
+  const cards = typeof json.error == 'number' ? [] : json;
   return {
     type: RECEIVE_SEARCH,
     text: text,
-    cards: json,
+    cards: cards,
     receivedAt: Date.now()
   };
 }
