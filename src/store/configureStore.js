@@ -15,7 +15,8 @@ export default function create(routes) {
     router: routerStateReducer,
     rootReducer
   });
-  const finalCreateStore = compose(applyMiddleware(thunkMiddleware, createLogger()),
+  const finalCreateStore = compose(
+    applyMiddleware(thunkMiddleware, createLogger()),
     reduxReactRouter({
       routes,
       createHistory
