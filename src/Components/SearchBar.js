@@ -42,9 +42,6 @@ const SearchBar = React.createClass({
       this.history.pushState(null, '/search/'+this.state.text);
     }
   },
-  handleChange(e) {
-    this.setState({ text: e.target.value });
-  },
 
   render() {
     return (
@@ -55,7 +52,7 @@ const SearchBar = React.createClass({
             bsSize="large"
             placeholder="Search..."
             value={this.state.text}
-            onChange={this.handleChange}
+            onChange={e => {this.setState({ text: e.target.value })}}
           />
         </form>
       </Col>
@@ -63,5 +60,5 @@ const SearchBar = React.createClass({
   }
 });
 
-export default connect((state) => state)(SearchBar);
+export default connect(state => state)(SearchBar);
 //export default SearchBar;
