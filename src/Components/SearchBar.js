@@ -42,7 +42,6 @@ const SearchBar = React.createClass({
       this.history.pushState(null, '/search/'+this.state.text);
     }
   },
-
   render() {
     return (
       <Col xs={12} md={12}>
@@ -61,4 +60,3 @@ const SearchBar = React.createClass({
 });
 
 export default connect(state => state)(SearchBar);
-//export default SearchBar;
