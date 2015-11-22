@@ -20,6 +20,7 @@ import {
 
 import { fetchSearch } from '../actions'
 
+
 import SearchItem from '../components/SearchItem';
 
 const SearchPage = React.createClass({
@@ -38,8 +39,8 @@ const SearchPage = React.createClass({
     const {isFetching, cards } = this.props;
     const cardList = (
       <div>
-        {cards.map(function(item){
-          return <SearchItem key={item.cardId} data={item} />;
+        {cards.map(function(card){
+          return <SearchItem key={card.cardId} data={card} />;
         })}
       </div>
     );

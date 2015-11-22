@@ -2,8 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import _ from 'lodash';
 
-import CardStore from '../store/CardStore';
-import CardActions from '../store/CardActions';
+import { connect } from 'react-redux';
 
 import {
   Button,
@@ -20,31 +19,41 @@ import {
 
 import CardInfo from '../components/CardInfo';
 
-import { search, selectCard } from '../actions'
+import { fetchCard } from '../actions'
 
 const CardPage = React.createClass({
   componentDidMount() {
-    dispatch(selectCard(this.props.params.name));
+    this.props.dispatch(fetchCard(this.props.params.name));
   },
   render() {
-    if (this.state.loading) {
-      return <div>Loading</div>;
-    }
+    const { card, isFetching } = this.props;
+
+    const cardInfo = (
+      <div>
+        <Col sm={6} md={4}>
+          <Panel>
+            <Image className="center-block" src={card.img} responsive />
+          </Panel>
+        </Col>
+        <Col sm={6} md={8}>
+          <CardInfo data={card} />
+        </Col>
+      </div>
+    );
 
 
     return (
       <Row>
-        <Col sm={6} md={4}>
-          <Panel>
-            <Image className="center-block" src={this.state.data.img} responsive />
-          </Panel>
-        </Col>
-        <Col sm={6} md={8}>
-          <CardInfo data={this.state.data} />
-        </Col>
+        {isFetching && <div>Loading...</div>}
+        {!isFetching && card.name == undefined && <div>Card not found</div>}
+        {card.name != undefined && cardInfo}
       </Row>
     )
   }
 });
 
-export default CardPage;
+function mapStateToProps(state) {
+  return state.rootReducer.cardResult;
+}
+
+export default connect(mapStateToProps)(CardPage);
