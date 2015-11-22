@@ -6,6 +6,8 @@
 import React from 'react';
 import { History } from 'react-router';
 
+import { fetchSearch } from '../actions';
+
 import {
   Button,
   ListGroup,
@@ -19,6 +21,7 @@ import {
   Panel
 } from 'react-bootstrap';
 
+import { connect } from 'react-redux';
 
 const SearchBar = React.createClass({
   mixins: [History],
@@ -27,9 +30,16 @@ const SearchBar = React.createClass({
       text: ''
     }
   },
+  componentDidMount() {
+    const { dispatch, router } = this.props;
+    if (router.params.text) {
+      dispatch(fetchSearch(router.params.text));
+    }
+  },
   handleClick(e) {
     e.preventDefault();
     if (this.state.text !== '') {
+      this.props.dispatch(fetchSearch(this.state.text));
       this.setState({
         text: ''
       });
@@ -60,4 +70,5 @@ const SearchBar = React.createClass({
   }
 });
 
-export default SearchBar;
+export default connect((state) => state)(SearchBar);
+//export default SearchBar;

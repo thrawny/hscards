@@ -24,17 +24,6 @@ import { fetchSearch } from '../actions'
 import SearchItem from '../components/SearchItem';
 
 const SearchPage = React.createClass({
-  componentDidMount() {
-    if (this.props.params.text) {
-      //SearchActions.search(this.props.params.text);
-      this.props.dispatch(fetchSearch(this.props.params.text));
-    }
-  },
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.params.text && nextProps.params.text !== this.props.params.text) {
-      this.props.dispatch(fetchSearch(nextProps.params.text));
-    }
-  },
   render() {
     const {isFetching, cards } = this.props;
     const cardList = (
