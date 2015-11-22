@@ -60,8 +60,6 @@
     "redux": "^3.0.4",
     "redux-logger": "^2.0.4",
     "redux-router": "^1.0.0-beta4",
-    "redux-thunk": "^1.0.0",
-    "reflux": "^0.3.0",
-    "superagent": "^1.4.0"
+    "redux-thunk": "^1.0.0"
   }
 }
