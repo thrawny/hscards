@@ -41,7 +41,6 @@ const CardPage = React.createClass({
       </div>
     );
 
-
     return (
       <Row>
         {isFetching && <div>Loading...</div>}
