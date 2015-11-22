@@ -26,9 +26,7 @@ import { connect } from 'react-redux';
 const SearchBar = React.createClass({
   mixins: [History],
   getInitialState() {
-    return {
-      text: ''
-    }
+    return { text: '' };
   },
   componentDidMount() {
     const { dispatch, router } = this.props;
@@ -36,28 +34,23 @@ const SearchBar = React.createClass({
       dispatch(fetchSearch(router.params.text));
     }
   },
-  handleClick(e) {
+  handleSubmit(e) {
     e.preventDefault();
     if (this.state.text !== '') {
       this.props.dispatch(fetchSearch(this.state.text));
-      this.setState({
-        text: ''
-      });
+      this.setState({ text: '' });
       this.history.pushState(null, '/search/'+this.state.text);
     }
   },
   handleChange(e) {
-    this.setState({
-      text: e.target.value
-    });
+    this.setState({ text: e.target.value });
   },
 
   render() {
     return (
       <Col xs={12} md={12}>
-        <form onSubmit={this.handleClick}>
+        <form onSubmit={this.handleSubmit}>
           <Input
-            ref="search"
             type="text"
             bsSize="large"
             placeholder="Search..."
