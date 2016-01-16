@@ -1,6 +1,4 @@
 import React from 'react';
-import Reflux from 'reflux';
-import _ from 'lodash';
 
 import { connect } from 'react-redux';
 

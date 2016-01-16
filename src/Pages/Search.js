@@ -1,7 +1,4 @@
 import React from 'react';
-import Reflux from 'reflux';
-import SearchStore from '../store/SearchStore';
-import SearchActions from '../store/SearchActions';
 import { Router, Route, Link, IndexRoute, IndexRedirect, History, Lifecycle } from 'react-router';
 import { connect } from 'react-redux';
 
