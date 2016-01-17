@@ -30,9 +30,10 @@ class SearchBar extends Component {
   }
   handleSubmit(e) {
     e.preventDefault();
-    if (this.state.text !== '') {
+    const { text } = this.state;
+    if (text !== '') {
       this.setState({ text: '' });
-      this.props.dispatch(routeActions.push('/search/'+this.state.text));
+      this.props.dispatch(routeActions.push(`/search/${text}`));
     }
   }
   render() {

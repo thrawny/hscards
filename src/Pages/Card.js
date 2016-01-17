@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 
@@ -19,10 +19,13 @@ import CardInfo from '../components/CardInfo';
 
 import { fetchCard } from '../actions'
 
-const CardPage = React.createClass({
+class CardPage extends Component {
+  constructor(props) {
+    super(props);
+  }
   componentDidMount() {
     this.props.dispatch(fetchCard(this.props.params.name));
-  },
+  }
   render() {
     const { card, isFetching } = this.props;
 
@@ -42,15 +45,11 @@ const CardPage = React.createClass({
     return (
       <Row>
         {isFetching && <div>Loading...</div>}
-        {!isFetching && card.name == undefined && <div>Card not found</div>}
-        {card.name != undefined && cardInfo}
+        {!isFetching && card.name === undefined && <div>Card not found</div>}
+        {card.name !== undefined && cardInfo}
       </Row>
     )
   }
-});
-
-function mapStateToProps(state) {
-  return state.rootReducer.cardResult;
 }
 
-export default connect(mapStateToProps)(CardPage);
+export default connect(state => state.rootReducer.cardResult)(CardPage);

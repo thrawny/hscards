@@ -34,7 +34,7 @@ class SearchPage extends Component {
     }
   }
   render() {
-    const {isFetching, cards } = this.props;
+    const { isFetching, cards } = this.props;
     const cardList = (
       <div>
         {cards.map(function(card){
@@ -52,8 +52,4 @@ class SearchPage extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return state.rootReducer.searchResults;
-}
-
-export default connect(mapStateToProps)(SearchPage);
+export default connect(state => state.rootReducer.searchResults)(SearchPage);

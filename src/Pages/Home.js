@@ -21,18 +21,14 @@ import {
 
 import SearchBar from '../components/SearchBar';
 
-const HomePage = React.createClass({
-  render() {
-    return (
-      <Grid>
-        <Row>
-          <Link to="/"><PageHeader>Search for Hearthstone cards</PageHeader></Link>
-          <SearchBar text={this.props.params.text} dispatch={this.props.dispatch}  />
-        </Row>
-        {this.props.children}
-      </Grid>
-    );
-  }
-});
+const HomePage = ({params, dispatch, children}) => (
+  <Grid>
+    <Row>
+      <Link to="/"><PageHeader>Search for Hearthstone cards</PageHeader></Link>
+      <SearchBar text={params.text} dispatch={dispatch}  />
+    </Row>
+    {children}
+  </Grid>
+);
 
 export default connect(state => state)(HomePage);
