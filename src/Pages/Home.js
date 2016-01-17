@@ -16,19 +16,40 @@ import {
   Row,
   Col,
   PageHeader,
-  Panel
+  Panel,
+  Navbar,
+  NavBrand,
+  NavItem,
+  Nav
+
+
+
 } from 'react-bootstrap';
 
 import SearchBar from '../components/SearchBar';
+import Login from  '../components/Login';
+
 
 const HomePage = ({params, dispatch, children}) => (
-  <Grid>
-    <Row>
-      <Link to="/"><PageHeader>Search for Hearthstone cards</PageHeader></Link>
-      <SearchBar text={params.text} dispatch={dispatch}  />
-    </Row>
-    {children}
-  </Grid>
+  <div>
+    <Navbar>
+      <Navbar.Header>
+        <Navbar.Brand>
+          <Link to="/">Search for Hearthstone cards</Link>
+        </Navbar.Brand>
+        <Navbar.Toggle />
+      </Navbar.Header>
+      <Navbar.Collapse>
+          <Login />
+      </Navbar.Collapse>
+    </Navbar>
+    <Grid>
+      <Row>
+          <SearchBar text={params.text} dispatch={dispatch}  />
+      </Row>
+      {children}
+    </Grid>
+  </div>
 );
 
 export default connect(state => state)(HomePage);
