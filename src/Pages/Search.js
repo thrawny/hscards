@@ -1,5 +1,4 @@
-import React from 'react';
-import { Router, Route, Link, IndexRoute, IndexRedirect, History, Lifecycle } from 'react-router';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import {
@@ -20,19 +19,20 @@ import { fetchSearch } from '../actions'
 
 import SearchItem from '../components/SearchItem';
 
-const SearchPage = React.createClass({
+class SearchPage extends Component {
+  constructor(props) {
+    super(props);
+  }
   componentDidMount() {
-    console.log('mount');
     if (this.props.params.text) {
       this.props.dispatch(fetchSearch(this.props.params.text));
     }
-  },
+  }
   componentWillReceiveProps(nextProps) {
-    console.log(this.props, nextProps.params.text);
     if (this.props.params.text !== nextProps.params.text) {
       this.props.dispatch(fetchSearch(nextProps.params.text));
     }
-  },
+  }
   render() {
     const {isFetching, cards } = this.props;
     const cardList = (
@@ -50,7 +50,7 @@ const SearchPage = React.createClass({
       </Row>
     );
   }
-});
+}
 
 function mapStateToProps(state) {
   return state.rootReducer.searchResults;

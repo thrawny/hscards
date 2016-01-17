@@ -20,19 +20,14 @@ import {
 } from 'react-bootstrap';
 
 
-const SearchItem = React.createClass({
-  render() {
-    const data = this.props.data;
-    return (
-      <Col md={4} sm={6}>
-        <Link to={"/card/"+data.name}>
-          <Panel>
-            <Image className="center-block" src={data.img} responsive />
-          </Panel>
-        </Link>
-      </Col>
-    );
-  }
-});
+const SearchItem = ({data}) => (
+  <Col md={4} sm={6}>
+    <Link to={"/card/"+data.name}>
+      <Panel>
+        <Image className="center-block" src={data.img} responsive />
+      </Panel>
+    </Link>
+  </Col>
+);
 
 export default SearchItem;

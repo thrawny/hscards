@@ -3,10 +3,9 @@
  * Created by thrawn on 12/11/15.
  */
 
-import React from 'react';
-
-import { fetchSearch } from '../actions';
-
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { routeActions } from 'redux-simple-router'
 import {
   Button,
   ListGroup,
@@ -20,20 +19,22 @@ import {
   Panel
 } from 'react-bootstrap';
 
-import { connect } from 'react-redux';
-import { routeActions } from 'redux-simple-router'
+import { fetchSearch } from '../actions';
 
-const SearchBar = React.createClass({
-  getInitialState() {
-    return { text: '' };
-  },
+
+class SearchBar extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { text: '' };
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
   handleSubmit(e) {
     e.preventDefault();
     if (this.state.text !== '') {
       this.setState({ text: '' });
       this.props.dispatch(routeActions.push('/search/'+this.state.text));
     }
-  },
+  }
   render() {
     return (
       <Col xs={12} md={12}>
@@ -49,6 +50,6 @@ const SearchBar = React.createClass({
       </Col>
     );
   }
-});
+}
 
 export default SearchBar;
