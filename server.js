@@ -3,10 +3,13 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const bodyParser = require('body-parser');
 const config = require('./webpack.config');
+const fetch = require('isomorphic-fetch');
 
 const app = new(require('express'));
 const port = 3000;
 const compiler = webpack(config);
+
+const KEY = require('./secret');
 
 app.use(webpackDevMiddleware(compiler, {
   noInfo: true,
@@ -15,8 +18,22 @@ app.use(webpackDevMiddleware(compiler, {
 app.use(webpackHotMiddleware(compiler));
 app.use(bodyParser.json());
 
-app.get('/special', (req, res) => {
-  res.send('worked.');
+app.get('/api/card/:name', (req, res) => {
+  fetch(`https://omgvamp-hearthstone-v1.p.mashape.com/cards/${req.params.name}?collectible=1`, {
+    headers: {
+      'X-Mashape-Key': KEY
+    }
+  }).then(response => response.json())
+    .then(json => res.json(json));
+});
+
+app.get('/api/search/:text', (req, res) => {
+  fetch(`https://omgvamp-hearthstone-v1.p.mashape.com/cards/search/${req.params.text}?collectible=1`, {
+    headers: {
+      'X-Mashape-Key': KEY
+    }
+  }).then(response => response.json())
+    .then(json => res.json(json));
 });
 
 app.get('*', (req, res) => {

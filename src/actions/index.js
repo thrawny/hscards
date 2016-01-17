@@ -11,8 +11,6 @@ export const RECEIVE_SEARCH = 'RECEIVE_SEARCH';
 export const REQUEST_CARD = 'REQUEST_CARD';
 export const RECEIVE_CARD = 'RECEIVE_CARD';
 
-import KEY from '../secret';
-
 function requestSearch(text) {
   return {
     type: REQUEST_SEARCH,
@@ -50,11 +48,8 @@ function receiveCard(name, json) {
 export function fetchSearch(text) {
   return dispatch => {
     dispatch(requestSearch(text));
-    return fetch(`https://omgvamp-hearthstone-v1.p.mashape.com/cards/search/${text}?collectible=1`, {
-      headers: {
-        'X-Mashape-Key': KEY
-      }
-    }).then(response => response.json())
+    return fetch(`/api/search/${text}`)
+      .then(response => response.json())
       .then(json => dispatch(receiveSearch(text, json)));
   }
 }
@@ -62,11 +57,8 @@ export function fetchSearch(text) {
 export function fetchCard(name) {
   return dispatch => {
     dispatch(requestCard(name));
-    return fetch(`https://omgvamp-hearthstone-v1.p.mashape.com/cards/${name}/?collectible=1`, {
-      headers: {
-        'X-Mashape-Key': KEY
-      }
-    }).then(response => response.json())
+    return fetch(`/api/card/${name}`)
+      .then(response => response.json())
       .then(json => dispatch(receiveCard(name, json)));
   }
 }
