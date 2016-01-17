@@ -27,7 +27,7 @@ const HomePage = React.createClass({
       <Grid>
         <Row>
           <Link to="/"><PageHeader>Search for Hearthstone cards</PageHeader></Link>
-          <SearchBar history={this.props.history} text={this.props.params.text}  />
+          <SearchBar text={this.props.params.text} dispatch={this.props.dispatch}  />
         </Row>
         {this.props.children}
       </Grid>

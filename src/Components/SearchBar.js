@@ -21,6 +21,7 @@ import {
 } from 'react-bootstrap';
 
 import { connect } from 'react-redux';
+import { routeActions } from 'redux-simple-router'
 
 const SearchBar = React.createClass({
   getInitialState() {
@@ -30,7 +31,7 @@ const SearchBar = React.createClass({
     e.preventDefault();
     if (this.state.text !== '') {
       this.setState({ text: '' });
-      this.props.history.pushState(null, '/search/'+this.state.text);
+      this.props.dispatch(routeActions.push('/search/'+this.state.text));
     }
   },
   render() {

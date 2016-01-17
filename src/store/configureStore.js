@@ -3,14 +3,15 @@ import createLogger from 'redux-logger'
 import rootReducer from '../reducers'
 import { applyMiddleware, createStore, combineReducers, compose } from 'redux';
 import { syncHistory, routeReducer } from 'redux-simple-router';
+import { browserHistory } from 'react-router';
 
 
-export default function create(history) {
+export default function create() {
   const composedReducers = combineReducers({
     router: routeReducer,
     rootReducer
   });
-  const reduxRouterMiddleware = syncHistory(history);
+  const reduxRouterMiddleware = syncHistory(browserHistory);
   const finalCreateStore = applyMiddleware(
     thunkMiddleware, createLogger(), reduxRouterMiddleware
   )(createStore);
