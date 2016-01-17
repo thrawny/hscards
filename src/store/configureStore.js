@@ -2,33 +2,26 @@ import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
 import rootReducer from '../reducers'
 import { applyMiddleware, createStore, combineReducers, compose } from 'redux';
-import { routerStateReducer, reduxReactRouter } from 'redux-router';
-import { createHistory } from 'history'
+import { syncHistory, routeReducer } from 'redux-simple-router';
 
-/**
- * Sets up the redux store.  Responsible for loading up the reducers and middleware.
- *
- * @param routes
- */
-export default function create(routes) {
+
+export default function create(history) {
   const composedReducers = combineReducers({
-    router: routerStateReducer,
+    router: routeReducer,
     rootReducer
   });
-  const finalCreateStore = compose(
-    applyMiddleware(thunkMiddleware, createLogger()),
-    reduxReactRouter({
-      routes,
-      createHistory
-    }))(createStore);
+  const reduxRouterMiddleware = syncHistory(history);
+  const finalCreateStore = applyMiddleware(
+    thunkMiddleware, createLogger(), reduxRouterMiddleware
+  )(createStore);
 
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers
     module.hot.accept('../reducers', () => {
-      const nextRootReducer = require('../reducers')
-      store.replaceReducer(nextRootReducer)
+      const nextRootReducer = require('../reducers');
+      store.replaceReducer(nextRootReducer);
     })
   }
 
-  return  finalCreateStore(composedReducers);
+  return finalCreateStore(composedReducers);
 }

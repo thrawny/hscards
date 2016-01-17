@@ -2,23 +2,22 @@ import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux'
+import { Router } from 'react-router';
+import createHistory from 'history/lib/createHashHistory';
 import configureStore from './store/configureStore'
-import { ReduxRouter } from 'redux-router';
 
 import routes from './routes';
 
-const store = configureStore(routes);
+const history = createHistory();
+const store = configureStore(history);
 
-import { search } from './actions';
 
-
-window.search = search;
 window.store = store;
 
 ReactDOM.render(
   <Provider store={store}>
-    <ReduxRouter>
+    <Router history={history}>
       {routes}
-    </ReduxRouter>
+    </Router>
   </Provider>,
   document.getElementById('root'));

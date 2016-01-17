@@ -4,6 +4,7 @@
 
 import React from 'react';
 import { Link } from 'react-router';
+import { connect } from 'react-redux';
 
 import {
   Button,
@@ -26,7 +27,7 @@ const HomePage = React.createClass({
       <Grid>
         <Row>
           <Link to="/"><PageHeader>Search for Hearthstone cards</PageHeader></Link>
-          <SearchBar />
+          <SearchBar history={this.props.history} text={this.props.params.text}  />
         </Row>
         {this.props.children}
       </Grid>
@@ -34,4 +35,4 @@ const HomePage = React.createClass({
   }
 });
 
-export default HomePage;
+export default connect(state => state)(HomePage);

@@ -4,7 +4,6 @@
  */
 
 import React from 'react';
-import { History } from 'react-router';
 
 import { fetchSearch } from '../actions';
 
@@ -24,22 +23,14 @@ import {
 import { connect } from 'react-redux';
 
 const SearchBar = React.createClass({
-  mixins: [History],
   getInitialState() {
     return { text: '' };
-  },
-  componentDidMount() {
-    const { dispatch, router } = this.props;
-    if (router.params.text) {
-      dispatch(fetchSearch(router.params.text));
-    }
   },
   handleSubmit(e) {
     e.preventDefault();
     if (this.state.text !== '') {
-      this.props.dispatch(fetchSearch(this.state.text));
       this.setState({ text: '' });
-      this.history.pushState(null, '/search/'+this.state.text);
+      this.props.history.pushState(null, '/search/'+this.state.text);
     }
   },
   render() {
@@ -59,4 +50,4 @@ const SearchBar = React.createClass({
   }
 });
 
-export default connect(state => state)(SearchBar);
+export default SearchBar;
