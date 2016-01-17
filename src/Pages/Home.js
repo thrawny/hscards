@@ -18,19 +18,17 @@ import {
   PageHeader,
   Panel,
   Navbar,
-  NavBrand,
   NavItem,
   Nav
-
-
-
 } from 'react-bootstrap';
 
 import SearchBar from '../components/SearchBar';
 import Login from  '../components/Login';
 
+import { logout } from '../actions';
 
-const HomePage = ({params, dispatch, children}) => (
+
+const HomePage = ({params, dispatch, location, children, isAuthenticated, email}) => (
   <div>
     <Navbar>
       <Navbar.Header>
@@ -40,7 +38,13 @@ const HomePage = ({params, dispatch, children}) => (
         <Navbar.Toggle />
       </Navbar.Header>
       <Navbar.Collapse>
-          <Login />
+        {!isAuthenticated && <Login dispatch={dispatch} location={location} />}
+        {isAuthenticated &&
+          <Nav>
+            <Navbar.Text>Logged in as <Link to="#">{email}</Link></Navbar.Text>
+            <NavItem onClick={() => dispatch(logout())}>Logout</NavItem>
+          </Nav>
+        }
       </Navbar.Collapse>
     </Navbar>
     <Grid>
@@ -52,4 +56,4 @@ const HomePage = ({params, dispatch, children}) => (
   </div>
 );
 
-export default connect(state => state)(HomePage);
+export default connect(state => state.rootReducer.authReducer)(HomePage);

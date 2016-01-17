@@ -36,6 +36,17 @@ app.get('/api/search/:text', (req, res) => {
     .then(json => res.json(json));
 });
 
+const SECRET = 'HEJ';
+
+app.post('/auth/login', (req, res) => {
+  if (req.body.email === 'hello@test.com' && req.body.password === 'kaka') {
+    res.status(200).json({token: SECRET, email: 'hello@test.com'})
+  }
+  else {
+    res.sendStatus(403);
+  }
+});
+
 app.get('*', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });

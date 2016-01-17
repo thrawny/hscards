@@ -16,36 +16,31 @@ import {
   Col,
   PageHeader,
   Panel,
-  Navbar
+  Navbar,
+  Nav
 } from 'react-bootstrap';
+
+import { login } from '../actions';
 
 
 class Login extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      email: '',
-      password: ''
-    };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   handleSubmit(e) {
     e.preventDefault();
-    console.log('hej');
+    const email = this.refs.email.getInputDOMNode().value;
+    const password = this.refs.password.getInputDOMNode().value;
+    this.props.dispatch(login(email, password, location.pathname))
 
   }
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <Navbar.Form  pullRight>
-            <Input type="text" placeholder="email"
-                   value={this.state.email}
-                   onChange={e => {this.setState({ email: e.target.value })}}
-            />{' '}
-            <Input type="password" placeholder="password"
-                   value={this.state.password}
-                   onChange={e => {this.setState({ password: e.target.value })}}
-            />{' '}
+        <Navbar.Form pullLeft>
+            <Input type="text" ref="email" placeholder="email" />{' '}
+            <Input type="password" ref="password" placeholder="password" />{' '}
             <Button type="submit">Submit</Button>
         </Navbar.Form>
       </form>
