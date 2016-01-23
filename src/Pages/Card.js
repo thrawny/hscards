@@ -44,8 +44,14 @@ class CardPage extends Component {
 
     return (
       <Row>
-        {isFetching && <div>Loading...</div>}
-        {!isFetching && card.name === undefined && <div>Card not found</div>}
+        {isFetching &&
+        <Col sm={12} md={12}>
+          <div>Loading...</div>
+        </Col>}
+        {!isFetching && card.name === undefined &&
+        <Col sm={12} md={12}>
+          <div>Card not found.</div>
+        </Col>}
         {card.name !== undefined && cardInfo}
       </Row>
     )

@@ -22,8 +22,8 @@ import {
 
 const SearchItem = ({data}) => (
   <Col md={4} sm={6}>
-    <Link to={"/card/"+data.name}>
-      <Panel>
+    <Link to={`/card/${data.name}`}>
+      <Panel className="search-item">
         <Image className="center-block" src={data.img} responsive />
       </Panel>
     </Link>

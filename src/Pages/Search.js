@@ -44,8 +44,14 @@ class SearchPage extends Component {
     );
     return (
       <Row>
-        {!isFetching && cards.length === 0 && <div>No results</div>}
-        {isFetching && cards.length === 0 && <div>Loading...</div>}
+        {!isFetching && cards.length === 0 &&
+        <Col sm={12} md={12}>
+          <div>No results.</div>
+        </Col>}
+        {isFetching && cards.length === 0 &&
+        <Col sm={12} md={12}>
+          <div>Loading...</div>
+        </Col>}
         {cards.length > 0 && cardList}
       </Row>
     );
