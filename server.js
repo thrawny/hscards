@@ -1,15 +1,20 @@
+'use strict';
+
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const bodyParser = require('body-parser');
 const config = require('./webpack.config');
 const fetch = require('isomorphic-fetch');
+const jwt = require('jsonwebtoken');
 
 const app = new(require('express'));
 const port = 3000;
 const compiler = webpack(config);
 
 const KEY = require('./secret');
+
+const SECRET = 'shhhhh';
 
 app.use(webpackDevMiddleware(compiler, {
   noInfo: true,
@@ -36,14 +41,28 @@ app.get('/api/search/:text', (req, res) => {
     .then(json => res.json(json));
 });
 
-const SECRET = 'HEJ';
-
 app.post('/auth/login', (req, res) => {
   if (req.body.email === 'hello@test.com' && req.body.password === 'kaka') {
-    res.status(200).json({token: SECRET, email: 'hello@test.com'})
+    const token = jwt.sign({ email: 'hello@test.com'}, SECRET);
+    res.status(200).json({token: token})
   }
   else {
     res.sendStatus(403);
+  }
+});
+
+app.get('/auth/data', (req, res) => {
+  let token = req.headers['authorization'];
+  if (!token) {
+    res.sendStatus(401);
+  } else {
+    try {
+      let decoded = jwt.verify(token.replace('Bearer ', ''), SECRET);
+      res.status(200)
+        .json({data: 'Valid JWT found! This protected data was fetched from the server.'});
+    } catch (e) {
+      res.sendStatus(401);
+    }
   }
 });
 

@@ -78,16 +78,17 @@ function requestLogin() {
 }
 
 function receiveLoginFailure(error) {
+  localStorage.removeItem('token');
   return {
     type: RECEIVE_LOGIN_FAILURE,
     statusCode: error.response.status,
     statusText: error.response.statusText
   }
 }
-function receiveLoginSuccess(email, token) {
+export function receiveLoginSuccess(token) {
+  localStorage.setItem('token', token);
   return {
     type: RECEIVE_LOGIN_SUCCESS,
-    email,
     token
   }
 }
@@ -114,7 +115,7 @@ export function login(email, password, redirect='/') {
       })
       .then(response => response.json())
       .then(json => {
-        dispatch(receiveLoginSuccess(json.email, json.token));
+        dispatch(receiveLoginSuccess(json.token));
         dispatch(routeActions.push(redirect));
       })
       .catch(error => {
@@ -126,6 +127,7 @@ export function login(email, password, redirect='/') {
 }
 
 export function logout() {
+  localStorage.removeItem('token');
   return {
     type: REQUEST_LOGOUT
   }

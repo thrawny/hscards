@@ -58,4 +58,4 @@ class CardPage extends Component {
   }
 }
 
-export default connect(state => state.rootReducer.cardResult)(CardPage);
+export default connect(state => state.card)(CardPage);

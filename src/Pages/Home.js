@@ -41,6 +41,7 @@ const HomePage = ({params, dispatch, location, children, isAuthenticated, email,
         {isAuthenticated &&
         <Nav pushRight>
           <Navbar.Text>Logged in as <Link to="#">{email}</Link></Navbar.Text>
+          <Navbar.Text><Link to="/profile">Profile</Link></Navbar.Text>
           <NavItem onClick={() => dispatch(logout())}>Logout</NavItem>
         </Nav>}
         {!isAuthenticated &&
@@ -61,4 +62,4 @@ const HomePage = ({params, dispatch, location, children, isAuthenticated, email,
   </div>
 );
 
-export default connect(state => state.rootReducer.authReducer)(HomePage);
+export default connect(state => state.auth)(HomePage);

@@ -5,6 +5,7 @@
 
 
 import { combineReducers } from 'redux';
+import jwtDecode from 'jwt-decode';
 
 import {
   REQUEST_SEARCH,
@@ -21,7 +22,7 @@ import {
 } from '../actions';
 
 
-function searchResults(state = {
+export function search(state = {
   isFetching: false,
   cards: []
 }, action) {
@@ -41,7 +42,7 @@ function searchResults(state = {
   }
 }
 
-function cardResult(state = {
+export function card(state = {
   isFetching: false,
   card: {}
 }, action) {
@@ -61,7 +62,7 @@ function cardResult(state = {
   }
 }
 
-function authReducer(state = {
+export function auth(state = {
   isFetching: false,
   isAuthenticated: false,
   token: null,
@@ -80,7 +81,7 @@ function authReducer(state = {
         isFetching: false,
         isAuthenticated: true,
         token: action.token,
-        email: action.email,
+        email: jwtDecode(action.token).email
       });
     case RECEIVE_LOGIN_FAILURE:
       return Object.assign({}, state, {
@@ -101,11 +102,3 @@ function authReducer(state = {
       return state;
   }
 }
-
-const rootReducer = combineReducers({
-  searchResults,
-  cardResult,
-  authReducer
-});
-
-export default rootReducer;

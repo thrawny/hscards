@@ -1,6 +1,6 @@
 import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
-import rootReducer from '../reducers'
+import * as reducers from '../reducers'
 import { applyMiddleware, createStore, combineReducers, compose } from 'redux';
 import { syncHistory, routeReducer } from 'redux-simple-router';
 import { browserHistory } from 'react-router';
@@ -9,7 +9,7 @@ import { browserHistory } from 'react-router';
 export default function create() {
   const composedReducers = combineReducers({
     router: routeReducer,
-    rootReducer
+    ...reducers
   });
   const reduxRouterMiddleware = syncHistory(browserHistory);
   const finalCreateStore = applyMiddleware(

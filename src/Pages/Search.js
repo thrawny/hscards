@@ -58,4 +58,4 @@ class SearchPage extends Component {
   }
 }
 
-export default connect(state => state.rootReducer.searchResults)(SearchPage);
+export default connect(state => state.search)(SearchPage);

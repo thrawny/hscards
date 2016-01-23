@@ -46,6 +46,8 @@
     "express": "^4.13.3",
     "history": "^1.13.0",
     "isomorphic-fetch": "^2.2.0",
+    "jsonwebtoken": "^5.5.4",
+    "jwt-decode": "^1.5.1",
     "lodash": "^3.10.1",
     "object-assign": "^4.0.1",
     "react": "^0.14.2",
