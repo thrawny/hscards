@@ -18,7 +18,7 @@ import {
   Panel,
   Navbar,
   Nav,
-  Alert
+  Fade
 } from 'react-bootstrap';
 
 import { login } from '../actions';
@@ -54,10 +54,11 @@ class Login extends Component {
             <Input type="password" ref="password" placeholder="password" />{' '}
             <Button type="submit">Login</Button>
         </Navbar.Form>
-        {this.state.showAlert &&
-        <Navbar.Text>
-          {this.props.statusText}
-        </Navbar.Text>}
+        <Fade in={this.state.showAlert}>
+          <Navbar.Text>
+            {this.props.statusText}
+          </Navbar.Text>
+        </Fade>
       </form>
     );
   }
