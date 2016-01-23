@@ -66,7 +66,8 @@ function authReducer(state = {
   isAuthenticated: false,
   token: null,
   email: null,
-  statusText: null
+  statusText: null,
+  statusCode: null
 }, action) {
   switch (action.type) {
     case REQUEST_LOGIN:
@@ -80,7 +81,6 @@ function authReducer(state = {
         isAuthenticated: true,
         token: action.token,
         email: action.email,
-        statusText: 'You have been successfully logged in.'
       });
     case RECEIVE_LOGIN_FAILURE:
       return Object.assign({}, state, {
@@ -88,14 +88,14 @@ function authReducer(state = {
         isAuthenticated: false,
         token: null,
         email: null,
-        statusText: 'Errorzzz'
+        statusText: 'Bad username/password',
+        statusCode: action.statusCode
       });
     case REQUEST_LOGOUT:
       return Object.assign({}, state, {
         isAuthenticated: false,
         token: null,
         email: null,
-        statusText: 'You have been successfully logged out.'
       });
     default:
       return state;

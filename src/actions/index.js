@@ -118,7 +118,6 @@ export function login(email, password, redirect='/') {
         dispatch(routeActions.push(redirect));
       })
       .catch(error => {
-        console.log(error);
         dispatch(receiveLoginFailure(error))
       })
 

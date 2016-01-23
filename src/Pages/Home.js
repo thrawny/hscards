@@ -28,7 +28,7 @@ import Login from  '../components/Login';
 import { logout } from '../actions';
 
 
-const HomePage = ({params, dispatch, location, children, isAuthenticated, email}) => (
+const HomePage = ({params, dispatch, location, children, isAuthenticated, email, statusText}) => (
   <div>
     <Navbar>
       <Navbar.Header>
@@ -38,13 +38,18 @@ const HomePage = ({params, dispatch, location, children, isAuthenticated, email}
         <Navbar.Toggle />
       </Navbar.Header>
       <Navbar.Collapse>
-        {!isAuthenticated && <Login dispatch={dispatch} location={location} />}
         {isAuthenticated &&
-          <Nav>
-            <Navbar.Text>Logged in as <Link to="#">{email}</Link></Navbar.Text>
-            <NavItem onClick={() => dispatch(logout())}>Logout</NavItem>
-          </Nav>
-        }
+        <Nav pushRight>
+          <Navbar.Text>Logged in as <Link to="#">{email}</Link></Navbar.Text>
+          <NavItem onClick={() => dispatch(logout())}>Logout</NavItem>
+        </Nav>}
+        {!isAuthenticated &&
+        <Login dispatch={dispatch}
+               location={location}
+               isAuthenticated={isAuthenticated}
+               email={email}
+               statusText={statusText}
+        />}
       </Navbar.Collapse>
     </Navbar>
     <Grid>

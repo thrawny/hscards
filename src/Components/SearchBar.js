@@ -4,7 +4,6 @@
  */
 
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { routeActions } from 'redux-simple-router'
 import {
   Button,
@@ -16,10 +15,9 @@ import {
   Row,
   Col,
   PageHeader,
-  Panel
+  Panel,
+  Well
 } from 'react-bootstrap';
-
-import { fetchSearch } from '../actions';
 
 
 class SearchBar extends Component {
