@@ -37,7 +37,6 @@ export default function requireAuthentication(Component) {
     }
   }
 
-  const mapStateToProps = state => state.rootReducer.authReducer;
-  return connect(mapStateToProps)(AuthenticatedComponent);
+  return connect(state => state.auth)(AuthenticatedComponent);
 
 }

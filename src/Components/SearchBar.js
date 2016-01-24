@@ -41,7 +41,7 @@ class SearchBar extends Component {
           <Input
             type="text"
             bsSize="large"
-            placeholder="Search..."
+            placeholder="Type in your search here, i.e. knight, fire or Ysera"
             value={this.state.text}
             onChange={e => {this.setState({ text: e.target.value })}}
           />

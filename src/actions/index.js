@@ -19,6 +19,9 @@ export const RECEIVE_LOGIN_FAILURE = 'RECEIVE_LOGIN_FAILURE';
 export const REQUEST_LOGOUT = 'REQUEST_LOGOUT';
 //export const RECEIVE_LOGOUT = 'RECEIVE_LOGOUT';
 
+export const REQUEST_PROFILE_DATA = 'REQUEST_PROFILE_DATA';
+export const RECEIVE_PROFILE_DATA = 'RECEIVE_PROFILE_DATA';
+
 function requestSearch(text) {
   return {
     type: REQUEST_SEARCH,
@@ -130,5 +133,44 @@ export function logout() {
   localStorage.removeItem('token');
   return {
     type: REQUEST_LOGOUT
+  }
+}
+
+
+export function fetchProfileData() {
+  return (dispatch, state) => {
+    const token = state().auth.token;
+    //dispatch(fetchProtectedDataRequest());
+    return fetch('/auth/data', {
+      credentials: 'include',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+      .then(response => {
+        if (response.status === 401) {
+          const error = new Error(response.statusText);
+          error.response = response;
+          throw error
+        }
+        return response;
+      })
+      .then(response => response.json())
+      .then(json => {
+        dispatch(receiveProfileData(json.data));
+      })
+      .catch(error => {
+        if(error.response.status === 401) {
+          dispatch(receiveLoginFailure(error));
+          //dispatch(pushState(null, '/login'));
+        }
+      })
+  }
+}
+
+function receiveProfileData(data) {
+  return {
+    type: RECEIVE_PROFILE_DATA,
+    data
   }
 }

@@ -4,7 +4,6 @@
  */
 
 
-import { combineReducers } from 'redux';
 import jwtDecode from 'jwt-decode';
 
 import {
@@ -18,7 +17,9 @@ import {
   RECEIVE_LOGIN_SUCCESS,
   RECEIVE_LOGIN_FAILURE,
 
-  REQUEST_LOGOUT
+  REQUEST_LOGOUT,
+
+  RECEIVE_PROFILE_DATA
 } from '../actions';
 
 
@@ -97,6 +98,19 @@ export function auth(state = {
         isAuthenticated: false,
         token: null,
         email: null,
+      });
+    default:
+      return state;
+  }
+}
+
+export function profile(state = {
+  data: null
+}, action) {
+  switch (action.type) {
+    case RECEIVE_PROFILE_DATA:
+      return Object.assign({}, state, {
+        data: action.data
       });
     default:
       return state;

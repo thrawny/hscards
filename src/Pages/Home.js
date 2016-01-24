@@ -33,13 +33,13 @@ const HomePage = ({params, dispatch, location, children, isAuthenticated, email,
     <Navbar>
       <Navbar.Header>
         <Navbar.Brand>
-          <Link to="/">Search for Hearthstone cards</Link>
+          <Link to="/">Hearthstone cards</Link>
         </Navbar.Brand>
         <Navbar.Toggle />
       </Navbar.Header>
       <Navbar.Collapse>
         {isAuthenticated &&
-        <Nav pushRight>
+        <Nav pullRight>
           <Navbar.Text>Logged in as <Link to="#">{email}</Link></Navbar.Text>
           <Navbar.Text><Link to="/profile">Profile</Link></Navbar.Text>
           <NavItem onClick={() => dispatch(logout())}>Logout</NavItem>
