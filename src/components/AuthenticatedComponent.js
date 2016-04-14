@@ -5,7 +5,7 @@
 
 import React from 'react';
 import {connect} from 'react-redux';
-import { routeActions } from 'redux-simple-router'
+import { routerActions } from 'react-router-redux'
 
 export default function requireAuthentication(Component) {
 
@@ -14,13 +14,13 @@ export default function requireAuthentication(Component) {
     componentWillMount() {
       if (!this.props.isAuthenticated) {
         //let redirectAfterLogin = this.props.location.pathname;
-        this.props.dispatch(routeActions.push('/'));
+        this.props.dispatch(routerActions.push('/'));
       }
     }
 
     componentWillReceiveProps(nextProps) {
       if (!nextProps.isAuthenticated) {
-        this.props.dispatch(routeActions.push('/'));
+        this.props.dispatch(routerActions.push('/'));
       }
     }
 

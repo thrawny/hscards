@@ -4,7 +4,7 @@
  */
 
 import fetch from 'isomorphic-fetch';
-import { routeActions } from 'redux-simple-router'
+import { routerActions } from 'react-router-redux'
 
 export const REQUEST_SEARCH = 'REQUEST_SEARCH';
 export const RECEIVE_SEARCH = 'RECEIVE_SEARCH';
@@ -119,7 +119,7 @@ export function login(email, password, redirect='/') {
       .then(response => response.json())
       .then(json => {
         dispatch(receiveLoginSuccess(json.token));
-        dispatch(routeActions.push(redirect));
+        dispatch(routerActions.push(redirect));
       })
       .catch(error => {
         dispatch(receiveLoginFailure(error))

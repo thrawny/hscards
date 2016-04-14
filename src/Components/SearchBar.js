@@ -4,7 +4,7 @@
  */
 
 import React, { Component } from 'react';
-import { routeActions } from 'redux-simple-router'
+import { routerActions } from 'react-router-redux'
 import {
   Button,
   ListGroup,
@@ -31,7 +31,7 @@ class SearchBar extends Component {
     const { text } = this.state;
     if (text !== '') {
       this.setState({ text: '' });
-      this.props.dispatch(routeActions.push(`/search/${text}`));
+      this.props.dispatch(routerActions.push(`/search/${text}`));
     }
   }
   render() {

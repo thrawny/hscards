@@ -21,7 +21,7 @@ import {
 const CardInfo = ({data}) => {
   const dataList = _.chain(data)
     .omit('img', 'imgGold', 'cardId', 'locale')
-    .pairs()
+    .fromPairs()
     .map(function([key, value]){
       const htmlValue = {__html: value.toString()};
       return (
