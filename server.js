@@ -9,7 +9,7 @@ const fetch = require('isomorphic-fetch');
 const jwt = require('jsonwebtoken');
 
 const app = new(require('express'));
-const port = 3000;
+const port = process.env.PORT || 3000;
 const compiler = webpack(config);
 
 const KEY = require('./secret');
@@ -70,7 +70,7 @@ app.get('*', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
 
-app.listen(port, (error) => {
+const server = app.listen(port, (error) => {
   if (error) {
     console.error(error);
   } else {
@@ -78,18 +78,4 @@ app.listen(port, (error) => {
   }
 });
 
-
-
-//const WebpackDevServer = require('webpack-dev-server');
-
-//new WebpackDevServer(webpack(config), {
-//  publicPath: config.output.publicPath,
-//  hot: true,
-//  historyApiFallback: true
-//}).listen(3000, 'localhost', function (err, result) {
-//  if (err) {
-//    console.log(err);
-//  }
-//
-//  console.log('Listening at localhost:3000');
-//});
+module.exports = server;
