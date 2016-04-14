@@ -43,7 +43,7 @@ app.get('/api/search/:text', (req, res) => {
 
 app.post('/auth/login', (req, res) => {
   if (req.body.email === 'hello@test.com' && req.body.password === 'kaka') {
-    const token = jwt.sign({ email: 'hello@test.com'}, SECRET);
+    const token = jwt.sign({ email: 'hello@test.com'}, SECRET, { expiresIn: '5m' });
     res.status(200).json({token: token})
   }
   else {

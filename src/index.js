@@ -6,6 +6,7 @@ import { Router } from 'react-router';
 import { browserHistory } from 'react-router';
 import configureStore from './store/configureStore'
 import { receiveLoginSuccess } from './actions'
+import jwtDecode from 'jwt-decode';
 
 import routes from './routes';
 
@@ -15,6 +16,7 @@ window.store = store;
 
 const token = localStorage.getItem('token');
 if (token !== null) {
+  console.log(jwtDecode(token));
   store.dispatch(receiveLoginSuccess(token));
 }
 
